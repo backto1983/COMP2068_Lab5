@@ -1,10 +1,10 @@
 const passport = require('passport');
-const User = require('../models/User');
+const user = require('../models/User');
 
 /* Modify the route handler for GET requests at /users so that it queries your database using your User model and fetches a list 
   of all users; make this route private so only authenticated users can access it */
 exports.getUsers = (req, res) => {
-  User.find((err, users) => {
+  user.find((err, users) => {
     if (err) {
       res.render('error');
     } else {
@@ -28,7 +28,7 @@ exports.registerForm = (req, res) => {
 exports.register = (req, res, next) => {
   const user = new User({ username: req.body.username });
 
-  User.register(user, req.body.password, (err, account) => {
+  user.register(user, req.body.password, (err, account) => {
     if (err) {
       // Using "return" so Node doesn't complain that headers already sent
       return res.render('register', {
