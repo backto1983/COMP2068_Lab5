@@ -8,7 +8,7 @@ const router = express.Router();
 /* GET home page. */
 router.get('/', gameController.homePage);
 
-router.get('/users', userController.getUsers);
+router.get('/users', authController.isLoggedIn, userController.getUsers); 
 
 router.get('/games', gameController.getGames);
 router.get('/filldata', authController.isLoggedIn, gameController.fillData);
