@@ -17,7 +17,6 @@ const usersRouter = require('./routes/users');
 const app = express();
 
 // Use mongoose to connect to mongodb
-require('dotenv').config({ path: 'variables.env' });
 const mongoose = require('mongoose'); 
 mongoose.connect(process.env.DATABASE)
     .then(connection => {
@@ -41,11 +40,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// session allow us to store data on visitors from request to request
+// this keeps users logged in and allows us to send flash messages
 app.use(session({
-    secret: process.env.SECRET,
-    resave: true,
-    saveUninitialized: false
-  }));
+  secret: process.env.SECRET,
+  key: process.env.KEY,
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
