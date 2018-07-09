@@ -16,9 +16,16 @@ const usersRouter = require('./routes/users');
 
 const app = express();
 
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.DATABASE);
+// Use mongoose to connect to mongodb
+require('dotenv').config({ path: 'variables.env' });
+const mongoose = require('mongoose'); 
+mongoose.connect(process.env.DATABASE)
+    .then(connection => {
+      console.log('Connected to MongoDB')
+    })
+    .catch(error => {
+      console.log(error.message)
+     });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
